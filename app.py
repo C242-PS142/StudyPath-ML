@@ -1,10 +1,11 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # Menonaktifkan penggunaan GPU
 from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
 
 # Inisialisasi Flask app
 app = Flask(__name__)
-
 # Load model TensorFlow (.h5)
 model = tf.keras.models.load_model('model.h5', compile=False)
 
@@ -29,11 +30,11 @@ def predict():
         predictions = model.predict(input_data)
 
         output = {traits[i]: float(predictions[i]) for i in range(5)}
-        converted_data = [float(item[0][0]) for item in predictions]
         return jsonify({'prediction': output})
     except Exception as e:
         return jsonify({'error': str(e)})
 
 # Jalankan aplikasi Flask
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080)
+
