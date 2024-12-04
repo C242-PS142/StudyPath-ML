@@ -7,7 +7,7 @@ import numpy as np
 # Inisialisasi Flask app
 app = Flask(__name__)
 # Load model TensorFlow (.h5)
-model = tf.keras.models.load_model('model.h5', compile=False)
+model = tf.keras.models.load_model('model1.h5', compile=False)
 
 # Route untuk endpoint prediksi
 @app.route('/predict', methods=['POST'])
