@@ -10,8 +10,8 @@ app = Flask(__name__)
 # Load model TensorFlow (.h5)
 model = tf.keras.models.load_model('model.h5', compile=False)
 
-scaler_X = joblib.load('scaler_X.pkl')  # Muat scaler untuk fitur input
-scaler_y = joblib.load('scaler_y.pkl')  # Muat scaler untuk target output
+scaler_x = joblib.load('scalerX.pkl')  # Muat scaler untuk fitur input
+scaler_y = joblib.load('scalerY.pkl')  # Muat scaler untuk target output
 
 # Route untuk endpoint prediksi
 @app.route('/predict', methods=['POST'])
@@ -37,7 +37,7 @@ def predict():
             return jsonify({'error': 'All elements in the input list must be numerical values.'}), 400
         
         # Terapkan MinMaxScaler pada input data yang masuk
-        input_data_scaled = scaler_X.transform(input_data)
+        input_data_scaled = scaler_x.transform(input_data)
 
         # Lakukan prediksi
         predictions = model.predict(input_data_scaled).flatten()
